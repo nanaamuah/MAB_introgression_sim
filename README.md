@@ -2,7 +2,7 @@
 
 This repository simulates marker-assisted backcrossing in AlphaSimR on a maize-like genome. It compares four schemes for moving a donor allele into an elite recurrent parent. The comparison covers the generations needed to reach 95% and 99% recurrent parent genome recovery, the donor segment left around the target (linkage drag), and the genotyping cost. It also tests how population size and a second target locus change these results.
 
-The full write-up is in `report.qmd`. All numbers in the report are read from `data/processed/`.
+The full write-up is in [![View Report](https://img.shields.io/badge/View-Full%20Report-blue)](https://nanaamuah.github.io/MAB_introgression_sim/report.html). All numbers in the report are read from `data/processed/`.
 
 ## Schemes
 
