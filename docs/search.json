@@ -1,0 +1,86 @@
+[
+  {
+    "objectID": "report.html",
+    "href": "report.html",
+    "title": "Marker-assisted backcross schemes for introgressing one and two target loci in a simulated maize genome",
+    "section": "",
+    "text": "Marker-assisted backcrossing moves a target allele from a donor line into an elite recurrent parent while the rest of the elite genome is recovered (Collard and Mackill 2008). A breeder pays for this in two ways. The first is the number of backcross generations needed to recover the recurrent parent genome; the second is the donor segment that stays linked to the target locus, which is known as linkage drag (Young and Tanksley 1989; Hospital 2001). Markers can reduce both costs because plants carrying the target can be identified directly (foreground selection) and ranked on how much recurrent parent genome they carry (background selection) (Hospital et al. 1992; Visscher et al. 1996). However, genotyping every plant is not free, and the saving in generations has to be set against the number of data points scored (Frisch et al. 1999; Morris et al. 2003). In maize, backcrossing has been used to move drought tolerance alleles into elite lines (Ribaut and Ragot 2007).\nThis project asks how many generations each scheme needs to reach 95% and 99% recurrent parent recovery, how much drag each scheme leaves, how population size changes the time and genotyping cost to 99% recovery, and how adding a second unlinked target changes the population size needed. We start with the reference template and its baseline output. A second part describes the simulated genome, the four schemes and the metrics. Finally, we report the results and discuss what they indicate for scheme choice."
+  },
+  {
+    "objectID": "report.html#reference-template",
+    "href": "report.html#reference-template",
+    "title": "Marker-assisted backcross schemes for introgressing one and two target loci in a simulated maize genome",
+    "section": "2.1 Reference template",
+    "text": "2.1 Reference template\nThe trait introgression script of Bančič et al. (2025) was run unchanged as a known reference (00_reproduce_temp.R). It uses two chromosomes of 1 Morgan with 11 markers each, places the trait at 0.5 M on chromosome 1, and applies three rounds of backcrossing with foreground selection followed by selfing. The template does not track recovery by generation, does not use background selection, and does not replicate; these three gaps define the additions made in this project."
+  },
+  {
+    "objectID": "report.html#founder-genome",
+    "href": "report.html#founder-genome",
+    "title": "Marker-assisted backcross schemes for introgressing one and two target loci in a simulated maize genome",
+    "section": "2.2 Founder genome",
+    "text": "2.2 Founder genome\nA maize-like genome of 10 chromosomes, each about 2 Morgans long, was simulated with runMacs in AlphaSimR (Chen et al. 2009; Gaynor et al. 2021) for 100 individuals with 2,000 segregating sites per chromosome. The target locus (TargetQTL) was added at the centre of chromosome 1 and kept off a 1,000 SNP per chromosome chip, because a chip that includes the target would let background selection see it. Doubled haploids were made from the base population, and the pair of lines with genotype 0 (recurrent parent) and 2 (donor) at the target and the largest SNP distance between them was kept as the two founders. The founders were then imported into a new SimParam with recombination tracking switched on, so that identity-by-descent (IBD) could be read for every locus. The founder seed (50) was also used to fix the chip, because addSnpChip draws SNPs at random."
+  },
+  {
+    "objectID": "report.html#backcross-schemes",
+    "href": "report.html#backcross-schemes",
+    "title": "Marker-assisted backcross schemes for introgressing one and two target loci in a simulated maize genome",
+    "section": "2.3 Backcross schemes",
+    "text": "2.3 Backcross schemes\nEach run started from a single F1 and backcrossed to the recurrent parent for 6 generations. Each backcross population had 100 plants and 10 plants were selected as parents of the next generation; population size was held constant because it is the fixed cost a breeder faces. The four schemes differed only in how the 10 plants were chosen. No marker selected plants at random without checking the target. Foreground selected at random among plants carrying the donor allele at the target. Background ranked carriers on the share of recurrent parent alleles at chip SNPs that differ between the two founders. Dense genomic applied the same ranking to every segregating site that differs between the founders, which is the dense marker case. Two other definitions of genomic background recovery exist, a genomic relationship matrix and genomic estimated breeding values for a polygenic trait; neither was run here."
+  },
+  {
+    "objectID": "report.html#metrics",
+    "href": "report.html#metrics",
+    "title": "Marker-assisted backcross schemes for introgressing one and two target loci in a simulated maize genome",
+    "section": "2.4 Metrics",
+    "text": "2.4 Metrics\nRecovery was computed two ways at every generation. Marker-estimated recovery is the share of recurrent parent alleles at polymorphic chip SNPs, which is what a breeder observes. True recovery is the share of loci whose IBD haplotypes descend from the recurrent parent founder. Linkage drag was measured on the IBD haplotypes of each selected plant as the distance in cM between the nearest loci homozygous for recurrent parent IBD on each side of the target; a chromosome end was used when no such locus existed on that side. Genotyping cost was counted as data points, that is the target locus scored on every plant plus the polymorphic loci scored on carriers."
+  },
+  {
+    "objectID": "report.html#replication-population-size-and-pyramiding",
+    "href": "report.html#replication-population-size-and-pyramiding",
+    "title": "Marker-assisted backcross schemes for introgressing one and two target loci in a simulated maize genome",
+    "section": "2.5 Replication, population size and pyramiding",
+    "text": "2.5 Replication, population size and pyramiding\nEach scheme was run for 50 seeded replicates (seeds 1001 to 1050). The replicate count was checked with a running mean of generations to 99% recovery. Background and Dense genomic were then run at 50, 100, 200 and 400 plants per generation, with 10 plants selected at every size (seeds 2001 to 2050); the selected proportion therefore fell from 20% to 2.5%. For pyramiding, a second target (TargetQTL2) was placed at the centre of chromosome 5, and foreground selection required a donor allele at both targets (seeds 3001 to 3050). The population size needed for pyramiding was taken as the smallest population that gives at least 10 carriers with 99% probability under a binomial draw at the expected carrier rate. Analyses used R with the tidyverse (Wickham et al. 2019)."
+  },
+  {
+    "objectID": "report.html#reference-template-1",
+    "href": "report.html#reference-template-1",
+    "title": "Marker-assisted backcross schemes for introgressing one and two target loci in a simulated maize genome",
+    "section": "3.1 Reference template",
+    "text": "3.1 Reference template\nIn the template, most BC3F2 plants carried between 70% and 95% recurrent parent genome (Figure 1). Marker M6, which sits at the trait position, was fixed for the donor allele, while M3 to M9 on chromosome 1 carried lower recovery than the markers on chromosome 2. This pattern is expected because only chromosome 1 carries the target; flanking donor segments are held there by foreground selection.\n\n\n\n\n\n\n\n\n\n\n\n(a)\n\n\n\n\n\n\n\n\n\n\n\n(b)\n\n\n\n\n\n\n\nFigure 1: Template output for BC3F2 plants: (a) distribution of recurrent parent IBD per plant; (b) IBD by marker."
+  },
+  {
+    "objectID": "report.html#recurrent-parent-recovery",
+    "href": "report.html#recurrent-parent-recovery",
+    "title": "Marker-assisted backcross schemes for introgressing one and two target loci in a simulated maize genome",
+    "section": "3.2 Recurrent parent recovery",
+    "text": "3.2 Recurrent parent recovery\nBackground and Dense genomic recovered the recurrent parent genome faster than Foreground and No marker from the first backcross (Figure 2). At generation 1, mean true recovery was 79.9% for Background and 79.9% for Dense genomic, against 74.0% for Foreground. Both background schemes reached 99% recovery in every replicate, at a mean of 4.10 and 4.14 generations (Table 1). Foreground reached 99% in only 7 of 50 replicates within 6 generations. Background reached 95% 1.14 generations earlier than Foreground on average. This suggests that background selection saves at least one backcross generation at 95% and more at 99%, which is consistent with Hospital et al. (1992).\n\n\n\n\n\n\n\n\nFigure 2: Mean true recurrent parent recovery by backcross generation. Error bars are one standard error over replicates.\n\n\n\n\n\n\n\n\n\nTable 1: Replicates reaching 95% and 99% true recovery, and the mean first generation at which each threshold was reached.\n\n\n\n\n\n\n\n\n\n\n\n\n\nScheme\nReached 95%\nMean generation (95%)\nReached 99%\nMean generation (99%)\n\n\n\n\nBackground\n50\n3.00\n50\n4.10\n\n\nDense genomic\n50\n3.00\n50\n4.14\n\n\nForeground\n50\n4.14\n7\n6.00\n\n\nNo marker\n50\n3.94\n38\n5.89\n\n\n\n\n\n\n\n\nNo marker reached 99% in more replicates (38) than Foreground. However, only 2.2% of No marker plants still carried the target allele at generation 6. Its faster recovery therefore appears to come from losing the target allele together with the donor segment around it. Its recovery also followed the expected value of 1 − 0.5^(t+1) closely (99.2% observed against 99.2% expected at generation 6), which supports the simulation behaving as a random backcross (Stam and Zeven 1981).\nThe running mean of generations to 99% changed by at most 0.031 generations over the last 10 replicates (Figure 3). Hence 50 replicates appear sufficient for this threshold.\n\n\n\n\n\n\n\n\nFigure 3: Running mean of generations to 99% recovery as replicates are added."
+  },
+  {
+    "objectID": "report.html#linkage-drag",
+    "href": "report.html#linkage-drag",
+    "title": "Marker-assisted backcross schemes for introgressing one and two target loci in a simulated maize genome",
+    "section": "3.3 Linkage drag",
+    "text": "3.3 Linkage drag\nForeground left the largest donor segment around the target (Figure 4). At generation 6, mean drag was 30.6 cM under Foreground, against 5.6 cM under Background and 5.2 cM under Dense genomic. Background selection likely reduced drag because plants with recombination close to the target carry more recurrent parent alleles on chromosome 1 and are ranked higher (Hospital 2001). No marker is not shown; its low drag reflects loss of the target allele.\n\n\n\n\n\n\n\n\nFigure 4: Mean linkage drag around the target locus by backcross generation. Error bars are one standard error over replicates."
+  },
+  {
+    "objectID": "report.html#marker-estimated-against-true-recovery",
+    "href": "report.html#marker-estimated-against-true-recovery",
+    "title": "Marker-assisted backcross schemes for introgressing one and two target loci in a simulated maize genome",
+    "section": "3.4 Marker-estimated against true recovery",
+    "text": "3.4 Marker-estimated against true recovery\nMarker-estimated recovery and true IBD recovery differed by at most 0.0061 in any replicate and generation (Figure 5). This indicates that a 1,000 SNP per chromosome chip, restricted to loci polymorphic between the founders, tracks true recovery closely on this genome.\n\n\n\n\n\n\n\n\nFigure 5: Marker-estimated recovery against true IBD recovery for every replicate and generation. The dashed line marks equality."
+  },
+  {
+    "objectID": "report.html#population-size-and-genotyping-cost",
+    "href": "report.html#population-size-and-genotyping-cost",
+    "title": "Marker-assisted backcross schemes for introgressing one and two target loci in a simulated maize genome",
+    "section": "3.5 Population size and genotyping cost",
+    "text": "3.5 Population size and genotyping cost\nLarger populations reduced the number of generations to 99% recovery (Figure 6). For Background, the mean fell from 4.92 generations at 50 plants to 3.68 at 400 plants. The cumulative cost rose from 422,936 to 2,557,327 data points over the same range (Figure 7, Table 2). Dense genomic needed a similar number of generations but about 2.0 times the cost of Background at 100 plants, because it scores every polymorphic segregating site. Based on these values, Background appears to give the same recovery as Dense genomic at a lower cost, and the gain from populations above 100 plants is small against the added cost.\n\n\n\n\n\n\n\n\nFigure 6: Mean generations to 99% recovery by population size. Error bars are one standard error over replicates.\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 7: Mean generations to 99% recovery against cumulative genotyping cost up to that generation.\n\n\n\n\n\n\n\n\n\nTable 2: Population size sweep: replicates reaching 99%, mean generation to 99%, cumulative genotyping cost (data points) and linkage drag at that generation.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nScheme\nPopulation size\nReached 99%\nMean generation\nMean cost\nDrag (cM)\n\n\n\n\nBackground\n50\n50\n4.92\n422,936\n18.9\n\n\nBackground\n100\n50\n4.12\n710,199\n18.9\n\n\nBackground\n200\n50\n3.98\n1,377,201\n13.5\n\n\nBackground\n400\n50\n3.68\n2,557,327\n11.7\n\n\nDense genomic\n50\n50\n4.88\n840,316\n17.6\n\n\nDense genomic\n100\n50\n4.10\n1,394,138\n18.4\n\n\nDense genomic\n200\n50\n4.00\n2,722,296\n12.8\n\n\nDense genomic\n400\n50\n3.52\n4,798,944\n13.5"
+  },
+  {
+    "objectID": "report.html#pyramiding-two-targets",
+    "href": "report.html#pyramiding-two-targets",
+    "title": "Marker-assisted backcross schemes for introgressing one and two target loci in a simulated maize genome",
+    "section": "3.6 Pyramiding two targets",
+    "text": "3.6 Pyramiding two targets\nWith two unlinked targets, the share of plants carrying both donor alleles was 25.1%, against 49.8% for one target. As a result, the population needed to secure 10 carriers with 99% probability rose from 33 to 70 plants. At 100 plants, Background reached 99% recovery in 48 of 50 replicates at a mean of 5.77 generations (Figure 8), against 4.10 generations for one target. Fewer carriers leave less room to select on background, which likely explains the slower recovery. At generation 6, drag under Background was 13.9 cM at TargetQTL and 14.3 cM at TargetQTL2, against 5.6 cM with one target.\n\n\n\n\n\n\n\n\nFigure 8: Mean true recurrent parent recovery by backcross generation when pyramiding two unlinked targets."
+  }
+]

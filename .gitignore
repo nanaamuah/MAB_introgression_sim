@@ -1,0 +1,30 @@
+# R session files
+.Rhistory
+.RData
+.Rproj.user/
+.Ruserdata
+
+# renv: keep renv.lock, .Rprofile and renv/activate.R; ignore the installed packages
+renv/library/
+renv/local/
+renv/cellar/
+renv/lock/
+renv/python/
+renv/sandbox/
+renv/staging/
+
+# Quarto cache and local render files (the published site in docs/ is tracked)
+.quarto/
+_freeze/
+report_files/
+/report.html
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Tracked on purpose: data/raw/founder_data.rds (founders and seed), data/processed/*.rds,
+# outputs/figures/, baseline_figures/, r_log.txt and pro_details.txt
+
+/.quarto/
+**/*.quarto_ipynb

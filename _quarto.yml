@@ -1,0 +1,12 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Marker-Assisted Backcross Simulation"
+  
+format:
+  html:
+    theme: cosmo
+    toc: true
+    embed-resources: true
